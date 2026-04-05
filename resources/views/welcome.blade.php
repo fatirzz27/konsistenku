@@ -4,13 +4,36 @@
 @section('body-class', 'd-flex flex-column')
 @section('container-class', '')
 
+@push('styles')
+<style>
+    .welcome-nav {
+        background-color: var(--bs-primary);
+    }
+
+    .welcome-hero {
+        background:
+            linear-gradient(135deg, rgba(13, 110, 253, 0.78), rgba(33, 37, 41, 0.62)),
+            url('https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1920&q=80') center/cover;
+    }
+
+    .feature-card {
+        border: 1px solid var(--bs-border-color);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .08);
+    }
+
+    .step-badge {
+        border-color: var(--bs-primary) !important;
+        border-width: 2px !important;
+        background: var(--bs-light);
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark welcome-nav shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="/">
-            <i class="bi bi-bullseye me-1"></i> KonsistenKu
-        </a>
+        <a class="navbar-brand fw-bold" href="/">KonsistenKu</a>
         <div class="ms-auto d-flex gap-2">
             <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm px-3">Masuk</a>
             <a href="{{ route('register') }}" class="btn btn-light btn-sm px-3 fw-semibold">Daftar</a>
@@ -19,7 +42,7 @@
 </nav>
 
 <!-- Hero -->
-<section class="bg-primary text-white">
+<section class="welcome-hero text-white">
     <div class="container py-5">
         <div class="row align-items-center py-lg-5">
             <div class="col-lg-7">
@@ -30,16 +53,11 @@
                 </p>
                 <div class="d-flex gap-2 flex-wrap">
                     <a href="{{ route('register') }}" class="btn btn-light btn-lg fw-semibold px-4">
-                        <i class="bi bi-rocket-takeoff me-1"></i> Mulai Gratis
+                        Mulai Gratis
                     </a>
                     <a href="#fitur" class="btn btn-outline-light btn-lg px-4">
-                        <i class="bi bi-arrow-down-circle me-1"></i> Pelajari
+                        Pelajari
                     </a>
-                </div>
-            </div>
-            <div class="col-lg-5 text-center d-none d-lg-block">
-                <div class="display-1 opacity-50">
-                    <i class="bi bi-bullseye"></i>
                 </div>
             </div>
         </div>
@@ -55,7 +73,7 @@
         </div>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4">
+                <div class="card h-100 border-0 feature-card rounded-4 text-center p-4">
                     <div class="card-body">
                         <div class="bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 64px; height: 64px;">
                             <i class="bi bi-bar-chart-line fs-3 text-primary"></i>
@@ -66,7 +84,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4">
+                <div class="card h-100 border-0 feature-card rounded-4 text-center p-4">
                     <div class="card-body">
                         <div class="bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 64px; height: 64px;">
                             <i class="bi bi-fire fs-3 text-warning"></i>
@@ -77,7 +95,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm rounded-4 text-center p-4">
+                <div class="card h-100 border-0 feature-card rounded-4 text-center p-4">
                     <div class="card-body">
                         <div class="bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 64px; height: 64px;">
                             <i class="bi bi-trophy fs-3 text-success"></i>
@@ -100,21 +118,21 @@
         </div>
         <div class="row g-4 text-center">
             <div class="col-md-4">
-                <div class="border border-2 rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-primary fw-bold fs-4" style="width: 56px; height: 56px;">
+                <div class="border step-badge rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-primary fw-bold fs-4" style="width: 56px; height: 56px;">
                     1
                 </div>
                 <h5 class="fw-bold">Buat Habit</h5>
                 <p class="text-muted small">Tambahkan kebiasaan yang ingin kamu lacak setiap hari.</p>
             </div>
             <div class="col-md-4">
-                <div class="border border-2 rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-primary fw-bold fs-4" style="width: 56px; height: 56px;">
+                <div class="border step-badge rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-primary fw-bold fs-4" style="width: 56px; height: 56px;">
                     2
                 </div>
                 <h5 class="fw-bold">Check-in Harian</h5>
                 <p class="text-muted small">Klik check-in setiap kali kamu menyelesaikan habit.</p>
             </div>
             <div class="col-md-4">
-                <div class="border border-2 rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-primary fw-bold fs-4" style="width: 56px; height: 56px;">
+                <div class="border step-badge rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-primary fw-bold fs-4" style="width: 56px; height: 56px;">
                     3
                 </div>
                 <h5 class="fw-bold">Lihat Progress</h5>
@@ -132,7 +150,7 @@
                 <h3 class="fw-bold mb-2">Siap Jadi Lebih Konsisten?</h3>
                 <p class="opacity-75 mb-4">Gratis, tanpa kartu kredit. Mulai tracking kebiasaanmu sekarang.</p>
                 <a href="{{ route('register') }}" class="btn btn-light btn-lg fw-semibold px-5">
-                    <i class="bi bi-person-plus me-1"></i> Daftar Sekarang
+                    Daftar Sekarang
                 </a>
             </div>
         </div>
@@ -143,7 +161,7 @@
 <footer class="py-4 mt-auto">
     <div class="container">
         <div class="text-center text-muted">
-            <small><i class="bi bi-bullseye me-1"></i> &copy; {{ date('Y') }} KonsistenKu. Bangun konsistensimu hari ini.</small>
+            <small>&copy; {{ date('Y') }} KonsistenKu. Bangun konsistensimu hari ini.</small>
         </div>
     </div>
 </footer>

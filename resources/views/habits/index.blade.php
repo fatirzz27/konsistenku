@@ -1,6 +1,40 @@
 @extends('layouts.app')
 
 @section('page-title', 'My Habits')
+@section('body-class', 'habits-page')
+
+@push('styles')
+<style>
+    .habits-page::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        pointer-events: none;
+        background-image: linear-gradient(120deg, rgba(13, 110, 253, 0.55), rgba(25, 135, 84, 0.45)), url('https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1920&q=80');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .habits-page::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background: rgba(33, 37, 41, 0.3);
+    }
+
+    .habits-page .app-content-wrap {
+        background: rgba(255, 255, 255, 0.94);
+    }
+
+    .habit-card {
+        border: 1px solid var(--bs-border-color);
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .08);
+    }
+</style>
+@endpush
 
 @section('content')
 <div class="mb-4">
@@ -12,7 +46,7 @@
 <div class="row g-4">
     @forelse($habits as $item)
         <div class="col-md-6 col-lg-4">
-            <div class="card shadow-sm h-100 {{ !$item['habit']->is_active ? 'opacity-50' : '' }}">
+            <div class="card habit-card h-100 {{ !$item['habit']->is_active ? 'opacity-50' : '' }}">
                 <div class="card-body text-center">
                     <h5 class="card-title fw-bold">{{ $item['habit']->name }}</h5>
                     <span class="badge bg-secondary mb-2">{{ ucfirst($item['habit']->category) }}</span>

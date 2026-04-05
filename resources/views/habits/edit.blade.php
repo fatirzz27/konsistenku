@@ -68,12 +68,39 @@
                     <strong class="text-danger">Hapus Habit</strong>
                     <p class="mb-0 text-muted small">Semua data log dan streak akan ikut terhapus.</p>
                 </div>
-                <form action="{{ route('habits.destroy', $habit) }}" method="POST"
-                      onsubmit="return confirm('Yakin ingin menghapus habit ini?')">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn-outline-danger btn-sm">Hapus</button>
-                </form>
+                <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteHabitModal">
+                    Hapus
+                </button>
+            </div>
+        </div>
+
+        <div class="modal fade app-modal" id="deleteHabitModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title d-flex align-items-center gap-2">
+                            <span class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                            Konfirmasi Hapus Habit
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mb-2">Yakin ingin menghapus habit <strong>{{ $habit->name }}</strong>?</p>
+                        <div class="alert alert-warning mb-0 small">
+                            Tindakan ini bersifat permanen dan semua data log serta streak terkait akan hilang.
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+                        <form action="{{ route('habits.destroy', $habit) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">
+                                <i class="bi bi-trash me-1"></i> Ya, Hapus
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
