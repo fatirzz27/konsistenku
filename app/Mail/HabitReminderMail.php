@@ -20,7 +20,7 @@ class HabitReminderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Reminder: Waktunya {$this->habit->name}!",
+            subject: "Pengingat Habit: {$this->habit->name}",
         );
     }
 

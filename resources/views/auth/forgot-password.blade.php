@@ -1,61 +1,59 @@
 @extends('layouts.guest')
 
-@section('title', 'Lupa Password - KonsistenKu')
-@section('body-class', 'd-flex align-items-center')
+@section('title', 'Forgot Password - KonsistenKu')
+@section('body-class', 'auth-page')
+@section('container-class', 'container-fluid p-0')
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5 col-xl-4">
-
-        <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-body p-4">
-
-                <p class="text-muted small mb-3">
-                    Masukkan email kamu dan kami akan kirimkan link untuk reset password.
-                </p>
-
-                @if (session('status'))
-                    <div class="alert alert-success">{{ session('status') }}</div>
-                @endif
-
-                <form method="POST" action="{{ route('password.email') }}">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label fw-semibold small">Email</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}"
-                                placeholder="contoh@email.com"
-                                required
-                                autofocus
-                            >
-                        </div>
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
-                        <i class="bi bi-send me-1"></i> Kirim Link Reset
-                    </button>
-                </form>
-            </div>
+<div class="row g-0 auth-split-shell">
+    <div class="col-lg-6 auth-hero-pane">
+        <div class="auth-hero-content">
+            <h1 class="auth-brand">KonsistenKu</h1>
+            <p class="auth-hero-copy">Don't worry, it happens to the best of us. Let's get you back on track.</p>
+            <ul class="auth-feature-list">
+                <li>Secure password recovery</li>
+                <li>Keep your habits safe</li>
+                <li>Quick access restoration</li>
+            </ul>
         </div>
+    </div>
 
-        <!-- Back to Login -->
-        <div class="d-grid gap-2 mt-3">
-            <a href="{{ route('login') }}" class="btn btn-outline-secondary py-2 fw-semibold">
-                <i class="bi bi-arrow-left me-1"></i> Kembali ke Login
+    <div class="col-lg-6 auth-form-pane">
+        <div class="auth-form-wrap">
+            <a href="{{ route('login') }}" class="auth-back-link">
+                <i class="bi bi-arrow-left"></i>
+                <span>Back to Sign In</span>
             </a>
-            <a href="{{ url('/') }}" class="btn btn-outline-secondary py-2">
-                <i class="bi bi-x-lg me-1"></i> Batal
-            </a>
+
+            <h2 class="auth-title">Forgot Password?</h2>
+            <p class="auth-subtitle">Enter the email address associated with your account and we'll send you a link to reset your password.</p>
+
+            @if (session('status'))
+                <div class="alert alert-success auth-status-alert">{{ session('status') }}</div>
+            @endif
+
+            <form method="POST" action="{{ route('password.email') }}">
+                @csrf
+
+                <div class="mb-4">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}"
+                        placeholder="you@email.com"
+                        required
+                        autofocus
+                    >
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">Send Reset Link</button>
+            </form>
         </div>
 
     </div>

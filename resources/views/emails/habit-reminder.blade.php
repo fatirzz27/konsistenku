@@ -1,22 +1,34 @@
+@php
+	$brandName = config('app.name', 'KonsistenKu');
+
+	if (strtolower(trim($brandName)) === 'laravel') {
+		$brandName = 'KonsistenKu';
+	}
+
+	$currentStreak = $habit->streak?->current_streak ?? 0;
+@endphp
+
 <x-mail::message>
-# ⏰ Hai {{ $habit->user->name }}!
+# Pengingat Aktivitas Harian
 
-Jangan lupa untuk **{{ $habit->name }}** hari ini!
+Halo {{ $habit->user->name }},
 
-@if($habit->streak && $habit->streak->current_streak > 0)
-🔥 Streak kamu sekarang: **{{ $habit->streak->current_streak }} hari berturut-turut!**
+Ini adalah pengingat untuk menyelesaikan aktivitas Anda hari ini.
 
-Jangan sampai putus ya!
-@else
-Yuk mulai bangun streak-mu dari hari ini!
+<x-mail::panel>
+<strong>{{ $habit->name }}</strong><br>
+Streak saat ini: <strong>{{ $currentStreak }} hari</strong>
+@if($habit->reminder_time)
+<br>Jam pengingat: <strong>{{ \Illuminate\Support\Carbon::parse($habit->reminder_time)->format('H:i') }}</strong>
 @endif
+</x-mail::panel>
 
 <x-mail::button :url="route('reminders.open', $habit)">
-Check-in Sekarang
+Buka Halaman Habit
 </x-mail::button>
 
-Tetap semangat dan konsisten! 💪
+Jika Anda sudah melakukan check-in hari ini, abaikan email ini.
 
-Salam,<br>
-{{ config('app.name') }}
+Salam hormat,<br>
+Tim {{ $brandName }}
 </x-mail::message>
