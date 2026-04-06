@@ -1,87 +1,95 @@
 @extends('layouts.guest')
 
 @section('title', 'Reset Password - KonsistenKu')
-@section('body-class', 'd-flex align-items-center')
+@section('body-class', 'auth-page')
+@section('container-class', 'container-fluid p-0')
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5 col-xl-4">
+<div class="row g-0 auth-split-shell">
+    <div class="col-lg-6 auth-hero-pane">
+        <div class="auth-hero-content">
+            <h1 class="auth-brand">KonsistenKu</h1>
+            <p class="auth-hero-copy">Create a new password to secure your account and continue your consistency journey.</p>
+            <ul class="auth-feature-list">
+                <li>Secure password update process</li>
+                <li>Protected account and habit history</li>
+                <li>Fast access back to your dashboard</li>
+            </ul>
+        </div>
+    </div>
 
-        <div class="card border-0 shadow-sm rounded-4">
-            <div class="card-body p-4">
-                <form method="POST" action="{{ route('password.store') }}">
-                    @csrf
-                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
+    <div class="col-lg-6 auth-form-pane">
+        <div class="auth-form-wrap">
+            <a href="{{ route('login') }}" class="auth-back-link">
+                <i class="bi bi-arrow-left"></i>
+                <span>Back to Sign In</span>
+            </a>
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="email" class="form-label fw-semibold small">Email</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email', $request->email) }}"
-                                required
-                            >
-                        </div>
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+            <h2 class="auth-title">Reset Password</h2>
+            <p class="auth-subtitle">Enter your email and create a new password to finish account recovery.</p>
+
+            <form method="POST" action="{{ route('password.store') }}">
+                @csrf
+                <input type="hidden" name="token" value="{{ $request->route('token') }}">
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email', $request->email) }}"
+                        required
+                        autofocus
+                    >
+                    @error('email')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">New Password</label>
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-control @error('password') is-invalid @enderror"
+                            placeholder="Minimal 8 karakter"
+                            required
+                        >
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password')" aria-label="Toggle new password visibility">
+                            <i class="bi bi-eye" id="password-icon"></i>
+                        </button>
                     </div>
+                    @error('password')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                    <!-- Password Baru -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label fw-semibold small">Password Baru</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                class="form-control @error('password') is-invalid @enderror"
-                                placeholder="Minimal 8 karakter"
-                                required
-                            >
-                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password')">
-                                <i class="bi bi-eye" id="password-icon"></i>
-                            </button>
-                            @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                <div class="mb-4">
+                    <label for="password_confirmation" class="form-label">Confirm New Password</label>
+                    <div class="input-group">
+                        <input
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            class="form-control @error('password_confirmation') is-invalid @enderror"
+                            placeholder="Ulangi password baru"
+                            required
+                        >
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password_confirmation')" aria-label="Toggle password confirmation visibility">
+                            <i class="bi bi-eye" id="password_confirmation-icon"></i>
+                        </button>
                     </div>
+                    @error('password_confirmation')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                    <!-- Konfirmasi -->
-                    <div class="mb-4">
-                        <label for="password_confirmation" class="form-label fw-semibold small">Konfirmasi Password</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-white"><i class="bi bi-lock-fill"></i></span>
-                            <input
-                                type="password"
-                                id="password_confirmation"
-                                name="password_confirmation"
-                                class="form-control"
-                                placeholder="Ulangi password baru"
-                                required
-                            >
-                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password_confirmation')">
-                                <i class="bi bi-eye" id="password_confirmation-icon"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
-                        <i class="bi bi-check-circle me-1"></i> Reset Password
-                    </button>
-
-                    <a href="{{ url('/') }}" class="btn btn-outline-secondary w-100 py-2 mt-2">
-                        <i class="bi bi-x-lg me-1"></i> Batal
-                    </a>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">Reset Password</button>
+            </form>
         </div>
     </div>
 </div>
@@ -92,6 +100,11 @@
     function togglePassword(id) {
         const input = document.getElementById(id);
         const icon = document.getElementById(id + '-icon');
+
+        if (!input || !icon) {
+            return;
+        }
+
         if (input.type === 'password') {
             input.type = 'text';
             icon.classList.replace('bi-eye', 'bi-eye-slash');

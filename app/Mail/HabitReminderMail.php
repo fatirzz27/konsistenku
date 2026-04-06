@@ -19,8 +19,10 @@ class HabitReminderMail extends Mailable
 
     public function envelope(): Envelope
     {
+        $sentAt = now()->timezone(config('app.timezone'))->format('Y-m-d H:i');
+
         return new Envelope(
-            subject: "Pengingat Habit: {$this->habit->name}",
+            subject: "[KonsistenKu] Pengingat Habit: {$this->habit->name} ({$sentAt})",
         );
     }
 
